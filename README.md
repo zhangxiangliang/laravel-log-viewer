@@ -20,6 +20,13 @@ Small log viewer for laravel. Looks like this:
 
 ![capture d ecran 2014-12-01 a 10 37 18](https://cloud.githubusercontent.com/assets/1575946/5243642/8a00b83a-7946-11e4-8bad-5c705f328bcc.png)
 
+修改
+-----------------
+* 去除控制器中的危险操作 (下载、删除)
+* 增加可显示错误类型配置 LOG_CAN_SHOW_LEVEL=error,info
+* 增加不可显示错误类型配置 LOG_CAN_SHOW_LEVEL=info
+* 错误类型值 `debug, info, notice, warning, error, critical, alert, emergency, processed, failed`
+
 Install (Laravel)
 -----------------
 Install via composer

@@ -141,6 +141,11 @@ class LaravelLogViewer
                         preg_match('/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}([\+-]\d{4})?)\](?:.*?(\w+)\.|.*?)' . $level . ': (.*?)( in .*?:[0-9]+)?$/i', $h[$i], $current);
                         if (!isset($current[4])) continue;
 
+                        if (!LaravelLogViewer::logCanShow($level)
+                            ||LaravelLogViewer::logCantShow($level)) {
+                            continue;
+                        }
+
                         $log[] = array(
                             'context' => $current[3],
                             'level' => $level,
@@ -157,6 +162,20 @@ class LaravelLogViewer
         }
 
         return array_reverse($log);
+    }
+
+    public static function logCanShow($level)
+    {
+        $config = env('LOG_CAN_SHOW_LEVEL');
+        $levels = strlen($config) ? explode(',', $config) : [];
+        return count($levels) ? in_array($level, $levels) : true;
+    }
+
+    public static function logCantShow($level)
+    {
+        $config = env('LOG_CANT_SHOW_LEVEL');
+        $levels = strlen($config) ? explode(',', $config) : [];
+        return count($levels) ? in_array($level, $levels) : false;
     }
 
     /**
